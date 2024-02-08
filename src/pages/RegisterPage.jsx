@@ -39,52 +39,68 @@ function RegisterPage() {
         console.log("I Was Clicked");
     }
     const handleSumbit = () => {
-        if(field1Ref.current.value === ""){
+        if (field1Ref.current.value === "") {
             toast.error("Username must be filled", {
                 position: "top-right",
-                duration: 5000
-            })
-        }
-        if(field2Ref.current.value === ""){
-            toast.error("email must be filled", {
-                position: "top-right",
-                duration: 5000
-            })
-        }
-        if(field3Ref.current.value === ""){
-            toast.error("password must be filled", {
-                position: "top-right",
-                duration: 5000
-            })
-        }
-        if(field1Ref.current.value === "" || field2Ref.current.value === "" || field3Ref.current.value === ""){
+                duration: 5000,
+            });
             return;
         }
-        axios.post(url+'/auth/register', {
-            "username": field1Ref.current.value,
-            "email": field2Ref.current.value,
-            "password": field3Ref.current.value
-        })
-        .then(() => {
-            toast.info("Sukses Mendaftar", {
+        if (field2Ref.current.value === "") {
+            toast.error("Email must be filled", {
                 position: "top-right",
-                duration: 5000
+                duration: 5000,
             });
-            setIsLoading(true);
-            navigate("/login")
-        })
-        .catch(() => {
-            toast.info("Gagal Mendaftar", {
+            return;
+        }
+        // Email validation using a regular expression
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(field2Ref.current.value)) {
+            toast.error("Invalid email format", {
                 position: "top-right",
-                duration: 5000
+                duration: 5000,
             });
-        })
-        .finally(()=> {
-            setIsLoading(false);
-            alert(field1Ref.current.value + field2Ref.current.value + field3Ref.current.value)
-        })
-
-    }
+            return;
+        }
+        if (field3Ref.current.value === "") {
+            toast.error("Password must be filled", {
+                position: "top-right",
+                duration: 5000,
+            });
+            return;
+        }
+    
+        // Rest of your code for making the API request
+        axios
+            .post(url + '/auth/register', {
+                username: field1Ref.current.value,
+                email: field2Ref.current.value,
+                password: field3Ref.current.value,
+            })
+            .then(() => {
+                toast.info("Sukses Mendaftar", {
+                    position: "top-right",
+                    duration: 5000,
+                });
+                setIsLoading(true);
+                navigate("/login");
+            })
+            .catch(() => {
+                toast.info("Gagal Mendaftar", {
+                    position: "top-right",
+                    duration: 5000,
+                });
+            })
+            .finally(() => {
+                setIsLoading(false);
+                alert(
+                    field1Ref.current.value +
+                        field2Ref.current.value +
+                        field3Ref.current.value
+                );
+            });
+    };
+    
   return (
     <div className="h-[100vh] w-full flex justify-center flex-wrap overflow-hidden dark">
         <Toaster/>
