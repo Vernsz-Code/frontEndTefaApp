@@ -18,6 +18,14 @@ function RegisterPage() {
     const [ init, setInit ] = useState(false);
     const navigate = useNavigate()
     useEffect(() => {
+        async function getData(){
+            if(localStorage.getItem("username")){
+                navigate("/")
+            } 
+        }
+        getData();
+    }, [])
+    useEffect(() => {
         initParticlesEngine(async (engine) => {
             await loadSlim(engine);
         }).then(() => {
