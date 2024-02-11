@@ -93,11 +93,6 @@ function RegisterPage() {
             })
             .finally(() => {
                 setIsLoading(false);
-                alert(
-                    field1Ref.current.value +
-                        field2Ref.current.value +
-                        field3Ref.current.value
-                );
             });
     };
     

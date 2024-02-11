@@ -14,7 +14,6 @@ function MainPage() {
     const [Contacts, setContacts] = useState([]);
     const [IsLoaded, setIsLoaded] = useState(false)
     const [CurrentChat, setCurrentChat] = useState(undefined)
-    const [recentMessage, setrecentMessage] = useState(null)
     const username = JSON.parse(localStorage.getItem("username"));
     const navigate = useNavigate()
     useEffect(() => {
@@ -52,15 +51,13 @@ function MainPage() {
     const handleChangeChat = (chat) => {
         setCurrentChat(chat);
     }
-    const handleRecentChat = (chatMessage) => {
-        setrecentMessage(chatMessage)
-    }
+    
   return (
     <div className='w-[100%] h-[100vh] flex flex-wrap overflow-hidden'>
-        <Contact Contacts={Contacts} CurrentData={currentData} CurrentChat={handleChangeChat} RecentMessage={recentMessage}/>
+        <Contact Contacts={Contacts} CurrentData={currentData} CurrentChat={handleChangeChat}/>
         <div id="mainPage" className="w-[75%] h-[100vh]">
             {
-                IsLoaded && CurrentChat !== undefined? <Chat RecentMessage={handleRecentChat} CurrentChat={CurrentChat} socket={socket} CurrentUser={username ? username : "..."}/> : <Wellcome CurrentUser={username ? username.username : "..."}/>
+                IsLoaded && CurrentChat !== undefined? <Chat CurrentChat={CurrentChat} socket={socket} CurrentUser={username ? username : "..."}/> : <Wellcome CurrentUser={username ? username.username : "..."}/>
             }
         </div>
     </div>
